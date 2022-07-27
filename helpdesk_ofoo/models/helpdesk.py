@@ -20,6 +20,13 @@ class HelpdeskTicket(models.Model):
 	def _message_post_after_hook(self, message, msg_vals):
 		res = super(HelpdeskTicket, self)._message_post_after_hook(message, msg_vals)
 
+		# this function is for automation of changing helpdesk ticket stage to customer reply when customer replied ticket.
+		# to trigger automation, some requirements are needed:
+		# 1. message_type is comment
+		# 2. message subtype is discussion
+		# 3. author must be same as customer in ticket
+		# 4. the current stage is not a new stage
+
 		author_id = msg_vals['author_id']
 		message_type = msg_vals['message_type']
 		subtype_id = msg_vals['subtype_id']
@@ -28,12 +35,8 @@ class HelpdeskTicket(models.Model):
 
 		if author_id:
 			if message_type == 'comment' and subtype_id == 1 and author_id == customer_id.id and stage_id.id != 1:
-				# print("Inherited.........................can change to customer reply.....")
-				self.env['helpdesk.ticket'].search([('id', '=', self.id)]).write({'stage_id': 3})
+				self.env['helpdesk.ticket'].search([('id', '=', self.id)]).write({'stage_id': 6})
 		else:
 			pass
 
 		return res
-
-
-
