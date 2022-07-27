@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="onnet_view_users_form" model="ir.ui.view">
+        <field name="name">ofoo.res.users.form</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group//field[@name='partner_id']" position="replace">
+                <group>
+                    <field name="partner_id" readonly="1" required="0" groups="base.group_no_one"
+                           attrs="{'invisible': [('id', '=', False)]}"/>
+                </group>
+                <group>
+                    <field name="phone_no" placeholder="XXX-XXXXXXX" readonly="0" widget="phone"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>

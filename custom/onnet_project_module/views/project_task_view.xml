@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="ofoo_quick_create_task_form" model="ir.ui.view">
+        <field name="name">ofoo.project.task.form.quick_create</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.quick_create_task_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group//field[@name='name']" position="before">
+                <field name="teams"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="ofoo_task_type_edit" model="ir.ui.view">
+        <field name="name">project.task.type.form</field>
+        <field name="model">project.task.type</field>
+        <field name="inherit_id" ref="project.task_type_edit"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@class='row ml-1']" position="before">
+                <div class="row ml-1" colspan="2">
+                    <label for="legend_pending" string=" " class="o_status o_status_red mt4"
+                           title="This step is pending. Click to block or set in pending."
+                           aria-label="This step is pending. Click to block or set in pending." role="img"/>
+                    <div class="col-11 pl-0">
+                        <field name="legend_pending"/>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="ofoo_view_task_kanban" model="ir.ui.view">
+        <field name="name">ofoo.project.task.kanban</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_kanban"/>
+        <field name="arch" type="xml">
+            <xpath expr="//kanban//field[@name='legend_blocked']" position="replace">
+                <field name="legend_pending"/>
+            </xpath>
+
+            <xpath expr="//progressbar" position="replace">
+                <progressbar field="kanban_state"
+                             colors='{"done": "success", "pending": "warning", "blocked": "danger", "normal": "muted"}'/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="ofoo_view_task_form2" model="ir.ui.view">
+        <field name="name">ofoo.project.task.form</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_form2"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <button type="object" name="action_send_whatsapp" string="Send Whatsapp" class="oe_highlight"
+                        icon="fa-whatsapp"/>
+            </xpath>
+
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button type="object" name="action_pending_review"
+                        string="Pending Review" class="oe_button oe_form_button"
+                        icon="fa-clock-o"
+                        attrs="{'invisible': ['|', ('pending_review', '=', True), ('stage_id', 'in', (19, 23))]}"/>
+                <button type="object" name="action_validate"
+                        string="Validate Task" class="oe_button oe_form_button"
+                        icon="fa-check-square-o" confirm="Are you sure the task is completed ?"
+                        attrs="{'invisible': ['|', ('pending_review', '!=', True), ('stage_id', '==', 23)]}"/>
+                <button type="object" name="action_restore"
+                        string="Restore" class="oe_button oe_form_button"
+                        icon="fa-rotate-left"
+                        attrs="{'invisible': [('stage_id', 'in', (19, 23))]}"/>
+            </xpath>
+
+            <xpath expr="//widget[@name='web_ribbon']" position="after">
+                <widget name="web_ribbon" title="Pending Review" bg_color="bg-warning"
+                        attrs="{'invisible': ['|', ('pending_review', '=', False), ('active', '=', False)]}"/>
+                <widget name="web_ribbon" title="Completed" bg_color="bg-success"
+                        attrs="{'invisible': ['|', ('stage_id', '!=', 23), ('active', '=', False)]}"/>
+            </xpath>
+
+            <xpath expr="//group//field[@name='legend_blocked']" position="after">
+                <field name="legend_pending" invisible='1'/>
+            </xpath>
+
+            <xpath expr="//group//field[@name='user_ids']" position="before">
+                <field name="teams"/>
+                <field name="user_phone_no"/>
+                <field name="color" readonly="1" invisible="1"/>
+                <field name="pending_review" readonly="1" invisible="1"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

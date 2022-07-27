@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="osp_crm_lead_view_form" model="ir.ui.view">
+        <field name="name">osp.crm.lead.form</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_lead_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='lead']//field[@name='partner_name']" position="after">
+                <field name="first_time_user" string="First Time User" invisible="1"/>
+                <field name="first_time_odoo" string="First Time User?"/>
+                <field name="category" string="Category"/>
+                <field name="industry" />
+                <field name="industry_id" />
+                <field name="industry_ref" attrs="{'invisible': [('industry_ref', '=', False)]}"/>
+                <field name="preferred_module" string="Preferred Module"/>
+                <field name="customer_requirement" string="Customer Requirement"/>
+                <field name="solution_type" string="Solution Type"/>
+                <field name="timeline" string="Timeline"/>
+                <field name="no_of_employee" string="Number of Employee in Range"/>
+                <field name="annual_revenue" string="Annual Revenue in Range"/>
+                <field name="business_modal" string="Business Model"/>
+            </xpath>
+            <xpath expr="//page[@name='lead']//field[@name='medium_id']" position="after">
+                <field name="medium_ref" string="Medium Reference" default="Contact us/ Lead magnet"/>
+            </xpath>
+            <xpath expr="//field[@name='tag_ids']" position="after">
+                <field name="date_closed"/>
+                <field name="date_lost" string="Lost Date"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="osp_crm_lead_view_tree_oppor_inherit_onnet" model="ir.ui.view">
+        <field name="name">osp.crm.lead.tree.inherit.onnet</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_case_tree_view_oppor"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='email_from']" position="attributes">
+                <attribute name="optional">show</attribute>
+            </xpath>
+            <xpath expr="//field[@name='phone']" position="attributes">
+                <attribute name="optional">show</attribute>
+            </xpath>
+            <xpath expr="//field[@name='activity_ids']" position="attributes">
+                <attribute name="optional">show</attribute>
+            </xpath>
+            <xpath expr="//field[@name='activity_date_deadline_my']" position="attributes">
+                <attribute name="optional">show</attribute>
+            </xpath>
+            <xpath expr="//field[@name='activity_date_deadline_my']" position="after">
+                <field name="date_lost" optional="hide"/>
+            </xpath>
+            <xpath expr="//field[@name='campaign_id']" position="before">
+                <field name="date_closed" optional="hide"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="osp_crm_case_opportunities_filter" model="ir.ui.view">
+        <field name="name">osp.crm.lead.search.opportunity</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.view_crm_case_opportunities_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='source']" position="after">
+                <filter string="Industry" name="industry_id" context="{'group_by':'industry_id'}"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

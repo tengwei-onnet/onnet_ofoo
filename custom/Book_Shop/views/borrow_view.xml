@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--    <record id="view_onnet_borrow_calendar" model="ir.ui.view">-->
+    <!--        <field name="name">onnet.borrow.calendar</field>-->
+    <!--        <field name="model">onnet.borrow</field>-->
+    <!--        <field name="arch" type="xml">-->
+    <!--            <calendar string="Borrow Record" date_start="borrowDate" date_stop="returnDate" event_pop_out="1">-->
+    <!--                <field name="customer_id"/>-->
+    <!--            </calendar>-->
+    <!--        </field>-->
+    <!--    </record>-->
+
+    <record id="view_onnet_borrow_kanban" model="ir.ui.view">
+        <field name="name">onnet.borrow.kanban</field>
+        <field name="model">onnet.borrow</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="borrow_status" disable_drag_drop_record='0' disable_sort_column="0">
+                <field name="color"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div t-attf-class="oe_kanban_color_{{kanban_getcolor(record.color.raw_value)}}
+                         oe_kanban_global_click oe_semantic_html_override
+                         oe_kanban_card {{record.group_fancy==1 ? 'oe_kanban_card_fancy' : ''}}">
+                            <div class="oe_dropdown_kanban">
+                                <div class="oe_dropdown_toggle">
+                                    <i class="fa fa-bars fa-lg" title="Manage" aria-label="Manage"/>
+                                    <ul class="oe_dropdown_menu">
+                                        <li>
+                                            <a type="delete">Delete</a>
+                                        </li>
+                                        <li>
+                                            <ul class="oe_kanban_colorpicker" data-field="color"/>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div t-attf-class="oe_kanban_content">
+                                    <field name="ref"/>
+                                    <br/>
+                                    <field name="customer_id"/>
+                                    <br/>
+                                    <field name="borrowDate"/>
+                                </div>
+
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="view_onnet_borrow_tree" model="ir.ui.view">
+        <field name="name">onnet.borrow.tree</field>
+        <field name="model">onnet.borrow</field>
+        <field name="arch" type="xml">
+            <tree decoration-danger="is_penalty == True">
+                <header>
+                    <button type="object" name="return_book" class="oe_highlight"
+                            string="Returned"/>
+                </header>
+                <field name="ref" string="Record ID" optional="show"/>
+                <field name="customer_id" string="Customer" optional="hide"/>
+                <field name="borrowDate"/>
+                <field name="dueDate"/>
+                <field name="returnDate" optional="hide"/>
+                <field name="borrow_status" optional="show"
+                       decoration-danger="borrow_status == 'returned'"
+                       decoration-success="borrow_status == 'borrowing'"
+                       decoration-muted="borrow_status == 'draft'"
+                       decoration-warning="borrow_status == 'cancel'" widget="badge"/>
+                <!--if you have multiple value like draft and cancelled in decoration-muted, can write like -->
+                <!--decoration-muted="borrow_status in {'draft','cancelled'}"-->
+                <field name="is_penalty" optional="hide"/>
+                <field name="fee" optional="show" sum="Total Profit"/>
+                <field name="penalty_fee" sum="Total Penalty Fee" optional="show"/>
+                <field name="total_price" sum="Total Fee" optional="hide" decoration-bf="1"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_onnet_borrow_graph" model="ir.ui.view">
+        <field name="name">onnet.borrow.graph</field>
+        <field name="model">onnet.borrow</field>
+        <field name="arch" type="xml">
+            <graph string="Borrow Statistic" type="line" stacked="False">
+                <field name="customer_id" type="row"/>
+                <field name="total_price" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="view_onnet_borrow_form" model="ir.ui.view">
+        <field name="name">onnet.borrow.form</field>
+        <field name="model">onnet.borrow</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <field name="borrow_status" widget="statusbar" nolabel="1"
+                           statusbar_visible="draft,borrowing,returned"/>
+                    <button type="object" name="set_draft" string="Set to Draft" class="oe_highlight"/>
+                    <button type="object" name="action_send_whatsapp" string="Send Whatsapp" class="oe_highlight"
+                            icon="fa-whatsapp"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button type="object" name="borrowing_book"
+                                string="Borrowing" class="oe_button oe_form_button"
+                                icon="fa-clock-o"/>
+                        <button type="object" name="return_book"
+                                string="Returned" class="oe_button oe_form_button"
+                                icon="fa-book" help="Customer has return all the books"
+                                confirm="Are you sure the customer has return all the books ?"/>
+                        <button type="object" name="cancel_record"
+                                string="Cancelled" class="oe_button oe_form_button"
+                                icon="fa-times-circle"/>
+                    </div>
+                    <widget name="web_ribbon" title="Draft" bg_color="bg-info"
+                            attrs="{'invisible': ['|', '|', ('borrow_status', '==', 'returned'), ('borrow_status', '==', 'borrowing'), ('borrow_status', '==', 'cancel')]}"/>
+                    <widget name="web_ribbon" title="Returned" bg_color="bg-danger"
+                            attrs="{'invisible': ['|', '|', ('borrow_status', '==', 'draft'), ('borrow_status', '==', 'borrowing'), ('borrow_status', '==', 'cancel')]}"/>
+                    <widget name="web_ribbon" title="Borrowing" bg_color="bg-success"
+                            attrs="{'invisible': ['|', '|', ('borrow_status', '==', 'draft'), ('borrow_status', '==', 'returned'), ('borrow_status', '==', 'cancel')]}"/>
+                    <widget name="web_ribbon" title="Cancelled" bg_color="bg-warning"
+                            attrs="{'invisible': ['|', '|', ('borrow_status', '==', 'draft'), ('borrow_status', '==', 'returned'), ('borrow_status', '==', 'borrowing')]}"/>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="ref"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="customer_id"/>
+                            <field name="phone_no"/>
+                            <field name="customer_name" invisible="1"/>
+                            <field name="active" invisible="1"/>
+                        </group>
+                        <group>
+                            <field name="borrowDate"/>
+                            <field name="dueDate"/>
+                            <field name="customer_dob" invisible="1"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="book_id">
+                            <tree string="Books" editable="bottom" create="0" delete="0">
+                                <field name="ref" readonly="1"/>
+                                <field name="title" readonly="1"/>
+                                <field name="author" readonly="1"/>
+                                <control>
+                                    <create name="add_product_control" string="Add a book"/>
+                                </control>
+                            </tree>
+                        </field>
+                    </group>
+
+                    <group>
+                        <group>
+                            <field name="fee" readonly="1"/>
+                            <field name="returnDate" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="is_penalty" string="Penalty" widget="boolean_toggle"
+                                   help="Customer who did not return the book on time"/>
+                            <field name="penalty_fee" readonly="1"
+                                   help="Penalty of RM5 per day (from due date to return date)"/>
+                        </group>
+                    </group>
+
+                    <div attrs="{'invisible': [('customer_dob', '=', False)]}">
+                        <group string="Birthday Present" name="other_info">
+                            <strong>Happy Birthday,
+                                <field name="customer_name" readonly="1"/>
+                                ^_^ ! You can Borrow 1 Free Book for your Birthday Present
+                            </strong>
+                        </group>
+                    </div>
+
+                    <separator/>
+                    <div attrs="{'invisible': [('borrow_status', '!=', 'cancel')]}">
+                        <group string="Cancellation Information" name="other_info">
+                            <field name="date_cancel"/>
+                            <field name="reason"/>
+                        </group>
+                    </div>
+                    <group name="note_group" col="6" class="mt-2 mt-md-0">
+                        <group class="oe_subtotal_footer oe_right" colspan="2" name="sale_total">
+                            <field name="fee" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                            <field name="penalty_fee" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                            <div class="oe_subtotal_footer_separator oe_inline o_td_label">
+                                <label for="total_price"/>
+                            </div>
+                            <field name="total_price" nolabel="1" class="oe_subtotal_footer_separator"
+                                   widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                        </group>
+                        <div class="oe_clear"/>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <!--                    <field name="activity_ids"/>-->
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!--    <record id="view_onnet_borrow_activity" model="ir.ui.view">-->
+    <!--        <field name="name">onnet.borrow.activity</field>-->
+    <!--        <field name="model">onnet.borrow</field>-->
+    <!--        <field name="arch" type="xml">-->
+    <!--            <activity string="Records">-->
+    <!--                <field name="book_id"/>-->
+    <!--                <field name="ref"/>-->
+    <!--                <templates>-->
+    <!--                    <div t-name="activity-box">-->
+    <!--                        <img t-att-src="activity_image('onnet.book', 'image', record.book_id.raw_value)"-->
+    <!--                             t-att-title="record.book_id.raw_value" t-att-alt="record.book_id.raw_value"/>-->
+    <!--                        <div>-->
+    <!--                            <field name="ref" display="full"/>-->
+    <!--                        </div>-->
+    <!--                    </div>-->
+    <!--                </templates>-->
+    <!--            </activity>-->
+    <!--        </field>-->
+    <!--    </record>-->
+
+    <record id="view_onnet_borrow_search" model="ir.ui.view">
+        <field name="name">onnet.borrow.search</field>
+        <field name="model">onnet.borrow</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="ref"/>
+                <field name="customer_id" string="Customer"
+                       filter_domain="['|', ('customer_id.name','ilike',self), ('customer_id.ref','ilike',self)]"/>
+                <filter name="filter_returned" string="Returned" domain="[('borrow_status', '=', 'returned')]"/>
+                <filter name="filter_borrowing" string="Borrowing" domain="[('borrow_status', '=', 'borrowing')]"/>
+                <filter name="filter_draft" string="Draft" domain="[('borrow_status', '=', 'draft')]"/>
+                <separator/>
+                <filter name="filter_penalty" string="Penalty" domain="[('is_penalty', '!=', False)]"/>
+                 <separator/>
+                <filter name="filter_active" string="Archived" domain="[('active', '=', False)]"/>
+                <separator/>
+                <filter name='filter_today' string="Today"
+                        domain="[('borrowDate', '&gt;=', datetime.datetime.now().strftime('%Y-%m-%d 00:00:00')),('borrowDate', '&lt;=',datetime.datetime.now().strftime('%Y-%m-%d 23:59:59'))]"/>
+                <group expand="0" string="Group By">
+                    <filter name="group_by_borrow_status" string="Status" context="{'group_by':'borrow_status'}"/>
+                    <filter name="group_by_borrow_date" string="Borrow Date" context="{'group_by':'borrowDate'}"/>
+                    <filter name="group_by_return_date" string="Return Date" context="{'group_by':'returnDate'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_onnet_borrow" model="ir.actions.act_window">
+        <field name="name">Record</field>
+        <field name="res_model">onnet.borrow</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">kanban,form,tree,graph</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first Record!
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="menu_borrow"
+              name="Borrow Records"
+              action="action_onnet_borrow"
+              parent="menu_record_master"
+              sequence="0"/>
+
+
+</odoo>

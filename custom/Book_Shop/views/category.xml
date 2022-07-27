@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+
+    <record id="view_book_category_tree" model="ir.ui.view">
+        <field name="name">book.category.tree</field>
+        <field name="model">book.category</field>
+        <field name="arch" type="xml">
+            <tree string="Tags" editable="bottom" sample="1">
+                <field name="name"/>
+                <field name="color" widget="color_picker"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_book_category" model="ir.actions.act_window">
+        <field name="name">Category</field>
+        <field name="res_model">book.category</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">tree</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first category!
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="menu_book_category"
+              name="Category"
+              action="action_book_category"
+              parent="menu_book_master"
+              sequence="0"/>
+
+
+</odoo>

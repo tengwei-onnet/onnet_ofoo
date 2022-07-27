@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- *** Primary Variables *** -->
+    <template id="_assets_primary_variables" inherit_id="web._assets_primary_variables" priority="15">
+        <xpath expr="." position="inside">
+            <link rel="stylesheet" type="text/scss"
+                  href="/osp_customization/static/src/scss/primary_variables.scss"/>
+        </xpath>
+    </template>
+
+    <!-- *** Assets Frontend *** -->
+    <template id="assets_frontend" inherit_id="website.assets_frontend" name="Website Assets">
+        <xpath expr="." position="inside">
+            <!-- Facebook Pixel Code -->
+            <script>
+            !function(f,b,e,v,n,t,s)
+            {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+            n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+            if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+            n.queue=[];t=b.createElement(e);t.async=!0;
+            t.src=v;s=b.getElementsByTagName(e)[0];
+            s.parentNode.insertBefore(t,s)}(window,document,'script',
+            'https://connect.facebook.net/en_US/fbevents.js');
+             fbq('init', '202818468178842');
+            fbq('track', 'PageView');
+            </script>
+            <noscript>
+             <img height="1" width="1"
+                  src="https://www.facebook.com/tr?id=202818468178842&amp;ev=PageView&amp;noscript=1"/>
+            </noscript>
+            <!-- End Facebook Pixel Code -->
+
+            <!-- Global site tag (gtag.js) - Google Analytics -->
+            <script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-191131535-1"></script>
+            <script>
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+
+              gtag('config', 'UA-191131535-1');
+            </script>
+
+<!--            &lt;!&ndash; Google Tag Manager &ndash;&gt;-->
+<!--            <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':-->
+<!--            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],-->
+<!--            j=d.createElement(s),dl=l!='dataLayer'?'&amp;l='+l:'';j.async=true;j.src=-->
+<!--            'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);-->
+<!--            })(window,document,'script','dataLayer','GTM-KQP7FPJ');</script>-->
+<!--            &lt;!&ndash; End Google Tag Manager &ndash;&gt;-->
+<!--            &lt;!&ndash; Google Tag Manager (noscript) &ndash;&gt;-->
+<!--            <noscript>-->
+<!--                <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KQP7FPJ"-->
+<!--                        height="0" width="0" style="display:none;visibility:hidden"></iframe>-->
+<!--            </noscript>-->
+<!--            &lt;!&ndash; End Google Tag Manager (noscript) &ndash;&gt;-->
+
+            <link rel="stylesheet" type="text/scss"
+                  href="/osp_customization/static/src/scss/website.scss"/>
+            <link rel="stylesheet" type="text/scss"
+                  href="/osp_customization/static/src/scss/video.scss"/>
+            <script type="text/javascript" src="/osp_customization/static/src/js/website.js"/>
+            <script type="text/javascript" src="/osp_customization/static/src/js/osp_popup.js"/>
+        </xpath>
+    </template>
+
+     <template id="assets_frontend_video" inherit_id="web.assets_frontend">
+        <xpath expr=".">
+            <script type="text/javascript" src="/osp_customization/static/src/js/osp_website.js"/>
+        </xpath>
+    </template>
+
+    <template id="osp_assets_website_form" inherit_id="intl_phone_field.assets_frontend">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/osp_customization/static/src/js/s_website_form.js"/>
+        </xpath>
+    </template>
+
+</odoo>

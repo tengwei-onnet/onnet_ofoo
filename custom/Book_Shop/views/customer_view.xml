@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_onnet_customer_tree" model="ir.ui.view">
+        <field name="name">onnet.customer.tree</field>
+        <field name="model">onnet.customer</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="ref"/>
+                <field name="name" string="Customer Name"/>
+                <field name="age"/>
+                <field name="gender"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_onnet_customer_form" model="ir.ui.view">
+        <field name="name">onnet.customer.form</field>
+        <field name="model">onnet.customer</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button type="object" name="add_record"
+                            string="Add New Record" class="oe_inline oe_state_button"
+                            icon="fa-plus"
+                            style="width: 100%; height: 90%; color: white; background: #eeaeca; border-radius: 25px;"
+                            attrs="{'invisible': [('gender', '==', 'male')]}"/>
+                    <button type="object" name="add_record"
+                            string="Add New Record" class="oe_inline oe_state_button"
+                            icon="fa-plus"
+                            style="width: 100%; height: 90%; color: white; background: #94bbe9; border-radius: 25px;"
+                            attrs="{'invisible': [('gender', '==', 'female')]}"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button type="object" name="action_view_record"
+                                class="oe_stat_button"
+                                icon="fa-book">
+                            <field name="count_borrow" widget="statinfo"/>
+                        </button>
+                    </div>
+                    <div class="alert alert-info text-center o_form_header" role="alert"
+                         attrs="{'invisible': [('is_birthday', '=', False)]}">
+                        <a class="close" data-dismiss="alert" href="#">x</a>
+                        <div>
+                            <strong>Today is
+                                <field name="name" readonly="1"/>
+                                Birthday !
+                            </strong>
+                        </div>
+                    </div>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="ref"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="name" string="Customer Name" required="1"/>
+                            <field name="dob" string="Date of Birth"/>
+                            <field name="age"/>
+                        </group>
+                        <group>
+                            <field name="gender"/>
+                            <field name="phone_no" placeholder="XXX-XXXXXXX" readonly="0" widget="phone"/>
+                            <field name="email" widget="email"/>
+                            <field name="is_birthday" invisible="1"/>
+                        </group>
+                    </group>
+
+                    <group>
+                        <notebook>
+                            <page string="Borrow Records">
+                                <field name="borrow_id"/>
+                            </page>
+                        </notebook>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_onnet_customer_search" model="ir.ui.view">
+        <field name="name">onnet.customer.search</field>
+        <field name="model">onnet.customer</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" string="Customer Name"
+                       filter_domain="['|', ('name','ilike',self), ('ref','ilike',self)]"/>
+                <field name="ref"/>
+                <filter name="filter_male" string="Male" domain="[('gender', '=', 'male')]"/>
+                <filter name="filter_female" string="Female" domain="[('gender', '=', 'female')]"/>
+                <separator/>
+                <filter name="filter_kids" string="Kids" domain="[('age', '&lt;=', '14')]"/>
+                <filter name="filter_older" string="Older" domain="[('age', '&gt;=', '60')]"/>
+                <group expand="0" string="Group By">
+                    <filter name="group_by_gender" string="Gender" context="{'group_by':'gender'}"/>
+                </group>
+                <searchpanel>
+                    <field name="gender" icon="fa-user-o"/>
+                </searchpanel>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_onnet_customer" model="ir.actions.act_window">
+        <field name="name">Customer</field>
+        <field name="res_model">onnet.customer</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first customer!
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="menu_customer"
+              name="Customer"
+              action="action_onnet_customer"
+              parent="menu_customer_master"
+              sequence="0"/>
+
+
+</odoo>

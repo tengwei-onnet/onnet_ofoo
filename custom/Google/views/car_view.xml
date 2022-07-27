@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--how to open a url link-->
+    <record id="url_google" model="ir.actions.act_url">
+        <field name="name">Google URL</field>
+        <field name="url">https://youtube.com</field>
+    </record>
+
+    <menuitem id="google_url"
+              name="Google"
+              action="url_google"
+              parent="menu_toyota_root"
+              sequence="0"/>
+
+</odoo>

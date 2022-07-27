@@ -1,0 +1,8 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access.onnet_book,access_onnet_bookshop,Book_Shop.model_onnet_book,base.group_user,1,1,1,1
+access.onnet_customer,access_onnet_customer,Book_Shop.model_onnet_customer,base.group_user,1,1,1,1
+access.onnet_borrow,access_onnet_borrow,Book_Shop.model_onnet_borrow,base.group_user,1,1,1,1
+access.book_category,access_book_category,Book_Shop.model_book_category,base.group_user,1,1,1,1
+access.onnet_staff,access_onnet_staff,Book_Shop.model_onnet_staff,base.group_user,1,1,1,1
+access.cancel_record,access_cancel_record,Book_Shop.model_cancel_record_wizard,base.group_user,1,1,1,1
+access.onnet_attendance,access_onnet_attendance,Book_Shop.model_onnet_attendance,base.group_user,1,1,1,1

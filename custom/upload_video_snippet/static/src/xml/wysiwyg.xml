@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+<!--<t t-inherit="wysiwyg.widgets.video" t-inherit-mode="extension">-->
+    <!--<xpath expr="//*[hasclass('o_video_dialog_options')]" position="after">-->
+        <!--<div>-->
+            <!--<label class="col-form-label" for="o_video_text">-->
+                <!--其他上传方式-->
+            <!--</label>-->
+            <!--<div id="videoDragDrop"></div>-->
+        <!--</div>-->
+    <!--</xpath>-->
+<!--</t>-->
+
+</templates>

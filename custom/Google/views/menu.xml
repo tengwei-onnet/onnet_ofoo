@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <menuitem id="menu_toyota_root"
+              web_icon="Google,static/description/icon.png"
+              name="Google"
+              sequence="0"/>
+
+</odoo>

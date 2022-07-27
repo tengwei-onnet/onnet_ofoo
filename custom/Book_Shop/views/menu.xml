@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <menuitem id="menu_bookshop_root"
+              web_icon="Book_Shop,static/description/icon.png"
+              name="Bookshop"
+              sequence="0"/>
+
+    <menuitem id="menu_book_master"
+              name="Books"
+              parent="menu_bookshop_root"
+              sequence="1"/>
+
+    <menuitem id="menu_customer_master"
+              name="Customers"
+              parent="menu_bookshop_root"
+              sequence="2"/>
+
+    <menuitem id="menu_staff_master"
+              name="Staff"
+              parent="menu_bookshop_root"
+              sequence="3"/>
+
+    <menuitem id="menu_record_master"
+              name="Records"
+              parent="menu_bookshop_root"
+              sequence="4"/>
+
+    <menuitem id="menu_cancel_record"
+              name="Cancellation"
+              parent="menu_record_master"
+              action="action_cancel_record"
+              sequence="1"/>
+</odoo>

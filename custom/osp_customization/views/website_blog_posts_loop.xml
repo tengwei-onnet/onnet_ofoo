@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="post_heading_osp" inherit_id="website_blog.post_heading">
+        <xpath expr="//a[@t-field='blog_post.name']" position="attributes">
+            <attribute name="t-attf-class">d-block text-primary text-decoration-none o_blog_post_title my-0 #{'h3' if opt_blog_list_view else ('h4' if opt_blog_readable else 'h6')}</attribute>
+        </xpath>
+    </template>
+
+</odoo>

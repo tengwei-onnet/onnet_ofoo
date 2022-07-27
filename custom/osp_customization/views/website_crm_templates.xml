@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+        <template id="contactus_form_osp" name="Contact Form" inherit_id="website.contactus">
+                <xpath expr="//h1/ancestor::div[hasclass('container')]" position="attributes">
+                        <attribute name="class">container text-center</attribute>
+                </xpath>
+                <xpath expr="//div[hasclass('col-lg-4')]" position="replace"/>
+                <xpath expr="//div[hasclass('col-lg-7')]" position="attributes">
+                        <attribute name="class">col-lg-10 col-xl-8 offset-lg-2 mr-lg-auto</attribute>
+                </xpath>
+                <xpath expr="//div[@class='oe_structure']" position="replace">
+                        <section class="s_cover parallax s_parallax_is_fixed bg-black-50 o_colored_level pt120 pb120" data-scroll-background-ratio="1" data-snippet="s_cover" data-name="Cover">
+                                <span class="s_parallax_bg oe_img_bg" style="background-image: url('/web/image/osp_customization.contactus_banner_image');background-position: 0 100%;"/>
+                                <div class="o_we_bg_filter bg-black-50"/>
+                                <div class="container text-center">
+                                        <h1 class="osp-h1" style="color: rgb(255, 255, 255); font-size: 3.79167rem;">
+                                                <span style="font-weight: bolder;">Contact Us</span>
+                                        </h1>
+                                        <h2 class="osp-h6" style="font-size: 2.16667rem;">
+                                                <font color="#e9ecef">Let us discuss the future of your business together</font>
+                                        </h2>
+                                </div>
+                        </section>
+                </xpath>
+                <xpath expr="//section[hasclass('s_text_block')]" position="replace"/>
+                <!--Form Details-->
+                <xpath expr="//div[@id='contactus_section']" position="replace">
+                        <div id="contactus_section">
+                                <section class="s_website_form" data-vcss="001" data-snippet="s_website_form">
+                                        <div class="container-size">
+                                                <form id="contactus_form" action="/website_form/" method="post" enctype="multipart/form-data" data-model_name="crm.lead" data-success-mode="redirect"
+                                                      data-success-page="/contactus-thank-you" class="o_mark_required" data-mark="*" data-editable-form="false">
+                                                        <div class="panel s_website_form_rows">
+                                                                <div class="panel-header">Tell Us More About You</div>
+                                                                <div class="panel-content">
+                                                                        <div class="row">
+                                                                                <!-- Category -->
+                                                                                <div class="col-lg-6 col-form-description">
+                                                                                        <div class="form-group big-groups">
+                                                                                                <div id="business_type_form">
+                                                                                                        <span class="star-position position-margin-star">*</span>
+                                                                                                        <label class="control-label label-alignment body-font">Sector</label>
+                                                                                                        <div class="row">
+                                                                                                                <ul class="col-lg-5 list-unstyled margin-bottom">
+                                                                                                                        <li>
+                                                                                                                                <input type="radio" id="manufacturing" name="category" value="Manufacturing">
+                                                                                                                                        <label for="manufacturing" class="s_website_form_label_content checkbox-padding checkbox-label body-font">Manufacturing</label>
+                                                                                                                                </input>
+                                                                                                                        </li>
+                                                                                                                        <li>
+                                                                                                                                <input type="radio" id="retail" name="category" value="Retail">
+                                                                                                                                        <label for="retail" class="s_website_form_label_content checkbox-padding checkbox-label body-font">Retail</label>
+                                                                                                                                </input>
+
+                                                                                                                        </li>
+                                                                                                                        <li>
+                                                                                                                                <input type="radio" id="ecommerce" name="category" value="Retail">
+                                                                                                                                        <label for="ecommerce" class="s_website_form_label_content checkbox-padding checkbox-label body-font">E-Commerce</label>
+                                                                                                                                </input>
+
+                                                                                                                        </li>
+                                                                                                                </ul>
+                                                                                                                <ul class="col-lg-6 list-unstyled margin-bottom">
+                                                                                                                        <li>
+                                                                                                                                <input type="radio" id="trading_distribution" name="category" value="Trading Distribution">
+                                                                                                                                        <label for="trading_distribution" class="s_website_form_label_content checkbox-padding checkbox-label body-font">Trading &amp; Distribution</label>
+                                                                                                                                </input>
+                                                                                                                        </li>
+                                                                                                                        <li>
+                                                                                                                                <input type="radio" id="consultation_services" name="category" value="Consultation &amp; Services">
+                                                                                                                                        <label for="consultation_services" class="s_website_form_label_content checkbox-padding checkbox-label body-font">Consultation &amp; Services</label>
+                                                                                                                                </input>
+                                                                                                                        </li>
+                                                                                                                </ul>
+                                                                                                                <span class="body-font error_message_font error_message_company" id="category_error"></span><span class="error_message_font"></span>
+                                                                                                        </div>
+                                                                                                </div>
+                                                                                                <br/>
+                                                                                                <div id="business_modal">
+                                                                                                    <span class="star-position position-margin-star">*</span>
+                                                                                                    <label class="control-label label-alignment body-font">Which type of business are you in?</label>
+                                                                                                    <br/>
+                                                                                                    <div class="row">
+                                                                                                        <ul class="col-lg-5 list-unstyled margin-bottom">
+                                                                                                            <li>
+                                                                                                                <input type="radio" id="business_modal_b2b" name="business_modal" value="b2b">
+                                                                                                                    <label for="business_modal_b2b" class="s_website_form_label_content checkbox-padding checkbox-label body-font">B2B</label>
+                                                                                                                </input>
+                                                                                                            </li>
+                                                                                                        </ul>
+                                                                                                        <ul class="col-lg-6 list-unstyled margin-bottom">
+                                                                                                            <li>
+                                                                                                                <input type="radio" id="business_modal_b2c" name="business_modal" value="b2c">
+                                                                                                                    <label for="business_modal_b2c" class="s_website_form_label_content checkbox-padding checkbox-label body-font">B2C</label>
+                                                                                                                </input>
+                                                                                                            </li>
+                                                                                                        </ul>
+                                                                                                    </div>
+                                                                                                    <span class="body-font error_message_font" id="business_modal_error"></span>
+                                                                                                    <span class="error_message_font"></span>
+                                                                                                </div>
+                                                                                                <div id="first_time_user">
+                                                                                                        <span class="star-position position-margin-star">*</span>
+                                                                                                        <label class="control-label label-alignment body-font">Are you currently using Odoo?</label>
+                                                                                                        <br/>
+                                                                                                        <div class="row">
+                                                                                                                <ul class="col-lg-5 list-unstyled margin-bottom">
+                                                                                                                        <li>
+                                                                                                                                <input type="radio" id="first_time_yes" name="first_time_user" value="True">
+                                                                                                                                        <label for="first_time_yes" class="s_website_form_label_content checkbox-padding checkbox-label body-font">Yes</label>
+                                                                                                                                </input>
+                                                                                                                        </li>
+                                                                                                                </ul>
+                                                                                                                <ul class="col-lg-6 list-unstyled margin-bottom">
+                                                                                                                        <li>
+                                                                                                                                <input type="radio" id="first_time_no" name="first_time_user" value="False">
+                                                                                                                                        <label for="first_time_no" class="s_website_form_label_content checkbox-padding checkbox-label body-font">No</label>
+                                                                                                                                </input>
+                                                                                                                        </li>
+                                                                                                                </ul>
+                                                                                                        </div>
+                                                                                                        <span class="body-font error_message_font" id="first_time_error"></span><span class="error_message_font"></span>
+                                                                                                </div>
+                                                                                        </div>
+                                                                                </div>
+
+                                                                                <!-- List of Industries -->
+                                                                                <div class="col-lg-6">
+                                                                                    <div>
+                                                                                        <span class="star-position position-margin-star">*</span>
+                                                                                        <select id="industry" name="industry_id" placeholder="Industry" required="required">
+                                                                                            <option value="">Select industry...</option>
+                                                                                            <t t-foreach="industries or []" t-as="industry">
+                                                                                                <option t-att-value="industry.id"><t t-esc="industry.name"/></option>
+                                                                                            </t>
+                                                                                        </select>
+                                                                                        <span class="body-font error_message_font" id="industry_error"></span><span class="error_message_font"></span>
+                                                                                    </div>
+                                                                                    <div class="text-box-margin other_industry_div d-none">
+                                                                                        <span class="star-position position-margin-star">*</span>
+                                                                                        <label class="control-label label-alignment body-font">If others:</label>
+                                                                                        <input type="text" id="other_industry" name="industry_ref"/>
+                                                                                        <span class="body-font error_message_font" id="other_industry_error"></span><span class="error_message_font"></span>
+                                                                                    </div>
+                                                                                </div>
+                                                                        </div>
+                                                                        <div role="separator" class="separator"/>
+
+                                                                        <!--Solution-->
+                                                                        <div class="row">
+                                                                                <div class="col-lg-6 product_margin_top">
+                                                                                        <span class="star-position position-margin-star">*</span>
+                                                                                        <label class="control-label label-alignment body-font">Select the apps your company needs:</label>
+                                                                                        <div class="row">
+                                                                                                <ul class="list-unstyled checkbox-margin margin-bottom">
+                                                                                                        <li>
+                                                                                                                <label for="manufacturing_module" class="s_website_form_label_content checkbox-padding checkbox-label body-font">
+                                                                                                                        <input type="checkbox" id="manufacturing_module" name="preferred_module" value="Manufacturing"/>
+                                                                                                                        Manufacturing</label>
+                                                                                                        </li>
+                                                                                                        <li>
+                                                                                                                <label for="invoicing_product" class="s_website_form_label_content checkbox-padding checkbox-label body-font">
+                                                                                                                        <input type="checkbox" id="invoicing_product" name="preferred_module" value="Invoicing"/>
+                                                                                                                        Invoicing</label>
+                                                                                                        </li>
+                                                                                                        <li>
+                                                                                                                <label for="accounting_product" class="s_website_form_label_content checkbox-padding checkbox-label body-font">
+                                                                                                                        <input type="checkbox" id="accounting_product" name="preferred_module" value="Accounting"/>
+                                                                                                                        Accounting</label>
+                                                                                                        </li>
+
+                                                                                                </ul>
+
+                                                                                                <ul class="list-unstyled checkbox-padding checkbox-margin-secondary margin-bottom">
+                                                                                                        <li>
+                                                                                                                <label for="CRM_product" class="s_website_form_label_content checkbox-padding checkbox-label body-font">
+                                                                                                                        <input type="checkbox" id="CRM_product" name="preferred_module" value="CRM"/>
+                                                                                                                        CRM</label>
+                                                                                                        </li>
+                                                                                                        <li>
+                                                                                                                <label for="sales_product" class="s_website_form_label_content checkbox-padding checkbox-label body-font">
+                                                                                                                        <input type="checkbox" id="sales_product" name="preferred_module" value="Sales"/>
+                                                                                                                        Sales</label>
+                                                                                                        </li>
+                                                                                                        <li>
+                                                                                                                <label for="purchase_product" class="s_website_form_label_content checkbox-padding checkbox-label body-font">
+                                                                                                                        <input type="checkbox" id="purchase_product" name="preferred_module" value="Purchase"/>
+                                                                                                                        Purchase</label>
+                                                                                                        </li>
+                                                                                                </ul>
+                                                                                                <ul class="list-unstyled checkbox-padding checkbox-margin-secondary  margin-bottom">
+                                                                                                        <li>
+                                                                                                                <label for="ecommerce_product" class="s_website_form_label_content checkbox-padding checkbox-label body-font">
+                                                                                                                        <input type="checkbox" id="ecommerce_product" name="preferred_module" value="E-commerce"/>
+                                                                                                                        E-commerce</label>
+                                                                                                        </li>
+                                                                                                        <li>
+                                                                                                                <label for="point_of_sales_product" class="s_website_form_label_content checkbox-padding checkbox-label body-font">
+                                                                                                                        <input type="checkbox" id="point_of_sales_product" name="preferred_module" value="Point-of-Sales"/>
+                                                                                                                        Point of Sales</label>
+                                                                                                        </li>
+                                                                                                        <li>
+                                                                                                                <label for="inventory_product" class="s_website_form_label_content checkbox-padding checkbox-label body-font">
+                                                                                                                        <input type="checkbox" id="inventory_product" name="preferred_module" value="Inventory"/>
+                                                                                                                        Inventory</label>
+                                                                                                        </li>
+                                                                                                </ul>
+                                                                                        </div>
+                                                                                        <span class="body-font error_message_font" id="module_error"></span><span class="error_message_font"></span>
+
+                                                                                        <!--Text box tell us description-->
+                                                                                        <div class="text-box-margin-description body-font">
+                                                                                                <textarea id="customer_requirement" placeholder="Tell us briefly what your company wants to achieve with the ERP system (eg: business challenges / goals / needs )"
+                                                                                                          class="form-control text-box-size-large body-font s_website_form_input" name="customer_requirement" required="required"/>
+                                                                                                <span class="error_message_font"></span>
+                                                                                        </div>
+
+                                                                                        <!--Solution Needed-->
+                                                                                        <div class="text-box-margin">
+                                                                                                <span class="star-position position-margin-star">*</span>
+                                                                                                <select id="solution_type" name="solution_type" placeholder="Solution Needed">
+                                                                                                        <option value="0">Solution Needed</option>
+                                                                                                        <option value="Standard | Adopt out-of-the-box">Standard | Adopt out-of-the-box</option>
+                                                                                                        <option value="Minor Customization | Some features to be developed">Minor Customization | Some features to be developed</option>
+                                                                                                        <option value="Major Customization | Need a unique solution">Major Customization | Need a unique solution</option>
+                                                                                                </select>
+                                                                                                <span class="body-font error_message_font" id="solution_error"></span><span class="error_message_font"></span>
+                                                                                        </div>
+
+                                                                                        <!--Timeline-->
+                                                                                        <div class="text-box-margin">
+                                                                                                <span class="star-position position-margin-star">*</span>
+                                                                                                <select id="timeline" name="timeline" placeholder="Timeline">
+                                                                                                        <option value="0">Timeline</option>
+                                                                                                        <option value="No Immediate Need">No immediate need</option>
+                                                                                                        <option value="Launch Within 3 months">Launch within 3 months</option>
+                                                                                                        <option value="Launch in 3-6 months">Launch in 3-6 months</option>
+                                                                                                        <option value="Launch in 6-12 months">Launch in 6-12 months</option>
+                                                                                                </select>
+                                                                                                <span class="body-font error_message_font" id="timeline_error"></span><span class="error_message_font"></span>
+                                                                                        </div>
+                                                                                </div>
+
+                                                                                <div class="col-lg-6">
+                                                                                        <!--Annual Revenue-->
+                                                                                        <div class="text-box-margin">
+                                                                                                <span class="star-position position-margin-star">*</span>
+                                                                                                <select id="annual_revenue" name="annual_revenue" placeholder="Annual Revenue">
+                                                                                                        <option value="0">Annual Revenue</option>
+                                                                                                        <option value="&lt; RM300,000 of annual sales"> &lt; RM300,000 of annual sales</option>
+                                                                                                        <option value="RM300,000 - 3 millions of annual sales">RM300,000 - 3 millions of annual sales</option>
+                                                                                                        <option value="3 millions - 10 millions of annual sales">3 millions - 10 millions of annual sales</option>
+                                                                                                        <option value="10 millions - 20 millions of annual sales">10 millions - 20 millions of annual sales</option>
+                                                                                                        <option value=" &gt; 20 Million of annual sales"> &gt; 20 Million of annual sales</option>
+                                                                                                </select>
+                                                                                                <span class="body-font error_message_font" id="annual_error"></span><span class="error_message_font"></span>
+                                                                                        </div>
+
+
+                                                                                        <!--Company-->
+                                                                                        <div class="text-box-margin field_margin_top">
+                                                                                                <span class="star-position position-margin-star">*</span>
+                                                                                                <input id="name" placeholder="Company" class="form-control body-font"
+                                                                                                       name="name" required="required"/>
+                                                                                                <span class="body-font error_message_font" id="company_error"></span><span class="error_message_font"></span>
+                                                                                        </div>
+
+                                                                                        <!--Name-->
+                                                                                        <div class="text-box-margin">
+                                                                                                <span class="star-position position-margin-star">*</span>
+                                                                                                <input id="contact_name" placeholder="Name" class="form-control body-font s_website_form_input"
+                                                                                                       name="contact_name" required="required"/>
+                                                                                                <span class="body-font error_message_font" id="name_error"></span><span class="error_message_font"></span>
+                                                                                        </div>
+
+                                                                                        <!--Job Role-->
+                                                                                        <div class="text-box-margin">
+                                                                                                <span class="star-position position-margin-star">*</span>
+                                                                                                <input id="function" placeholder="Job Role (eg: IT Manager/MD)"
+                                                                                                       class="form-control body-font s_website_form_input" name="function" required="required"/>
+                                                                                                <span class="body-font error_message_font" id="job_role_error"/><span class="error_message_font"></span>
+                                                                                        </div>
+
+                                                                                        <!--E-mail-->
+                                                                                        <div class="text-box-margin">
+                                                                                                <span class="star-position position-margin-star">*</span>
+                                                                                                <input id="email_from" type="email" class="form-control emailInput"
+                                                                                                       name="email_from" placeholder="Email (eg: john@yourcompany.com)" required="required"/>
+                                                                                                <span class="body-font error_message_font" id="email_error"></span>
+                                                                                                <span class="body-font error_message_font" id="email_invalid"></span><span class="error_message_font"></span>
+                                                                                        </div>
+
+                                                                                        <!--Phone-->
+                                                                                        <div class="text-box-margin" id="tel_input">
+                                                                                                <span class="star-position position-margin-star">*</span>
+                                                                                                <input id="phone" type="text" name="phone" placeholder="" class="form-control s_website_form_input intlTelInput"
+                                                                                                       required="required" />
+                                                                                                <span class="body-font error_message_font" id="phone_error"></span>
+                                                                                                <span class="body-font error_message_font" id="phone_invalid"></span><span class="error_message_font"></span>
+                                                                                        </div>
+                                                                                </div>
+                                                                        </div>
+
+                                                                        <!--Submit button-->
+                                                                        <div>
+                                                                                <div id="submit_button" class="s_website_form_submit form-group div_submit_contactus hidden-xs hidden-sm send-top btn-margin" data-name="Submit Button">
+                                                                                        <a href="#" role="button" id="s_website_form_send_osp" class="btn btn-primary btn-lg flat s_website_form_send s_website_form_send_osp body-font">SUBMIT</a>
+                                                                                </div>
+                                                                                <span class="body-font error_message_font submit_invalid" id="submit_invalid"/><span class="error_message_font"></span>
+                                                                        </div>
+                                                                </div>
+                                                        </div>
+                                                </form>
+                                        </div>
+                                </section>
+                        </div>
+                </xpath>
+        </template>
+</odoo>

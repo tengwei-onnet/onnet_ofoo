@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="seq_onnet_customer" model="ir.sequence">
+            <field name="name">Customer Sequence</field>
+            <field name="code">onnet.customer</field>
+            <field name="prefix">C</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="seq_onnet_book" model="ir.sequence">
+            <field name="name">Book Sequence</field>
+            <field name="code">onnet.book</field>
+            <field name="prefix">B</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="seq_onnet_borrow" model="ir.sequence">
+            <field name="name">Borrow Sequence</field>
+            <field name="code">onnet.borrow</field>
+            <field name="prefix">RB</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="seq_onnet_staff" model="ir.sequence">
+            <field name="name">Staff Sequence</field>
+            <field name="code">onnet.staff</field>
+            <field name="prefix">S</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+    </data>
+
+
+</odoo>

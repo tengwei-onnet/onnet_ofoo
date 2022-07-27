@@ -1,0 +1,51 @@
+// Colors
+//$o-community-color: #3ec1d5;
+//$o-enterprise-color: #3ec1d5;
+//$o-enterprise-primary-color: #5ce1e6;
+//
+//$o-brand-odoo: $o-enterprise-color;
+//$o-brand-primary: $o-enterprise-primary-color;
+
+$osp-theme-h1-font-size-multiplier: 3.5 !default;
+$osp-theme-h2-font-size-multiplier: 3 !default;
+$osp-theme-h3-font-size-multiplier: 2.75 !default;
+$osp-theme-h4-font-size-multiplier: 2.5 !default;
+$osp-theme-h5-font-size-multiplier: 2.25 !default;
+$osp-theme-h6-font-size-multiplier: 2 !default;
+
+
+$osp-h1-font-size: $o-font-size-base * $osp-theme-h1-font-size-multiplier !default;
+$osp-h2-font-size: $o-font-size-base * $osp-theme-h2-font-size-multiplier !default;
+$osp-h3-font-size: $o-font-size-base * $osp-theme-h3-font-size-multiplier !default;
+$osp-h4-font-size: $o-font-size-base * $osp-theme-h4-font-size-multiplier !default;
+$osp-h5-font-size: $o-font-size-base * $osp-theme-h5-font-size-multiplier !default;
+$osp-h6-font-size: $o-font-size-base * $osp-theme-h6-font-size-multiplier !default;
+
+.osp-h1 { @include font-size($osp-h1-font-size); }
+.osp-h2 { @include font-size($osp-h2-font-size); }
+.osp-h3 { @include font-size($osp-h3-font-size); }
+.osp-h4 { @include font-size($osp-h4-font-size); }
+.osp-h5 { @include font-size($osp-h5-font-size); }
+.osp-h6 { @include font-size($osp-h6-font-size); }
+
+// Colors
+$o-color-palettes: (
+    (
+        'o-color-1': #3ec1d5,
+        'o-color-2': #5ce1e6,
+        'o-color-3': #FFFFFF,
+        'o-color-4': #FFFFFF,
+        'o-color-5': #383E45,
+    ),
+    (
+        'o-color-1': #3ec1d5,
+        'o-color-2': #e9ecef,
+        'o-color-3': #FFFFFF,
+        'o-color-4': #FFFFFF,
+        'o-color-5': #343a40,
+
+        'menu': 2,
+        'footer': 2,
+        'copyright': 5,
+    ),
+);

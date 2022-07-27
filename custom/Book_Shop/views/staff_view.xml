@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_onnet_staff_tree" model="ir.ui.view">
+        <field name="name">onnet.staff.tree</field>
+        <field name="model">onnet.staff</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="ref"/>
+                <field name="name" string="Staff Name"/>
+                <field name="age"/>
+                <field name="gender"/>
+                <field name="position"/>
+                <field name="salary" sum="Total Salary"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_onnet_staff_form" model="ir.ui.view">
+        <field name="name">onnet.staff.form</field>
+        <field name="model">onnet.staff</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="ref"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="name" string="Staff Name"/>
+                            <field name="dob" string="Date of Birth"/>
+                            <field name="age"/>
+                            <field name="active"/>
+                        </group>
+                        <group>
+                            <field name="phone_no" placeholder="XXX-XXXXXXX" readonly="0" widget="phone"/>
+                            <field name="gender"/>
+                            <field name="position"/>
+                            <field name="salary"/>
+                        </group>
+                    </group>
+                    <group>
+                        <notebook>
+                            <page string="Check-in Record">
+                                <field name="attendance_id"/>
+                            </page>
+                        </notebook>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_onnet_staff_search" model="ir.ui.view">
+        <field name="name">onnet.staff.search</field>
+        <field name="model">onnet.staff</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" string="Staff Name"
+                       filter_domain="['|', ('name','ilike',self), ('ref','ilike',self)]"/>
+                <field name="ref"/>
+                <filter name="filter_male" string="Male" domain="[('gender', '=', 'male')]"/>
+                <filter name="filter_female" string="Female" domain="[('gender', '=', 'female')]"/>
+                <separator/>
+                <filter name="filter_kids" string="Kids" domain="[('age', '&lt;=', 14)]"/>
+                <filter name="filter_older" string="Older" domain="[('age', '&gt;=', 60)]"/>
+                <separator/>
+                <filter name="filter_active" string="Archived" domain="[('active', '=', False)]"/>
+                <group expand="0" string="Group By">
+                    <filter name="group_by_gender" string="Gender" context="{'group_by':'gender'}"/>
+                    <filter name="group_by_position" string="Position" context="{'group_by':'position'}"/>
+                </group>
+                <searchpanel>
+                    <field name="gender" icon="fa-user-o"/>
+                </searchpanel>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_onnet_staff" model="ir.actions.act_window">
+        <field name="name">Staff</field>
+        <field name="res_model">onnet.staff</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first staff!
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="menu_staff"
+              name="Staff"
+              action="action_onnet_staff"
+              parent="menu_staff_master"
+              sequence="0"/>
+
+</odoo>

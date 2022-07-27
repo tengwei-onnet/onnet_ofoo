@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="report_onnet_borrow">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <h1>
+                            <span t-field="o.ref"/>
+                        </h1>
+
+                        <br/>
+
+                        <div style="position:relative; left: 20px;">
+                            <div class="row">
+                                <div class="column" style="width: 50%">
+                                    <strong>Customer:</strong>
+                                    <span t-field="o.customer_id"/>
+                                </div>
+                                <div class="column" style="width: 50%">
+                                    <strong>Borrow Date:</strong>
+                                    <span t-field="o.borrowDate"/>
+                                </div>
+                            </div>
+
+                            <br/>
+
+                            <div class="row">
+                                <div class="column, text-left" style="width: 50%">
+                                    <strong>Phone Number:</strong>
+                                    <span t-field="o.phone_no"/>
+                                </div>
+                                <div class="column, text-left" style="width: 50%">
+                                    <strong>Due Date:</strong>
+                                    <span t-field="o.dueDate"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <br/>
+
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th class="text-left">Reference No</th>
+                                    <th class="text-left">Title</th>
+                                    <th class="text-left">Author</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-set="books" t-value="o.mapped('book_id')"/>
+                                <tr t-foreach="books" t-as="book">
+                                    <td class="text-left">
+                                        <span t-field="book.ref"/>
+                                    </td>
+                                    <td class="text-left">
+                                        <span t-field="book.title"/>
+                                    </td>
+                                    <td class="text-left">
+                                        <span t-field="book.author"/>
+                                    </td>
+
+                                </tr>
+                                <tr>
+                                    <td>
+                                    </td>
+                                    <td>
+                                        <strong>Total Fee :</strong>
+                                    </td>
+                                    <td>
+                                        <span t-field="o.fee"/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <br/>
+
+                        <div style="position:relative; left: 20px;">
+                            <div class="row">
+                                <div class="column" style="width: 50%">
+                                    <strong>Return Date:</strong>
+                                    <span t-field="o.returnDate"/>
+                                </div>
+                                <div class="column" style="width: 50%">
+                                    <strong>Penalty:</strong>
+                                    <span t-field="o.penalty_fee"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 style="text-decoration: underline; font-family: 'Times New Roman', Times, serif;">Policy Statement</h3>
+                            <p>To ensure equitable access for all library users, the borrowing rights, privileges and
+                                obligations of the Onnet BookShop staff are the same as those extended to the general public.
+                            </p>
+                        </div>
+                        <div>
+                            <h3 style="text-decoration: underline; font-family: 'Times New Roman', Times, serif;">Regulations</h3>
+                            <ol style="position:relative; left: 20px;">
+                                <li>A new staff member who lives within the County limits and does not have a library
+                                    card will be issued one by the Circulation Supervisor on his or her first day of work.
+                                </li>
+                                <li>A staff member who lives outside the County may purchase a non-resident card for a
+                                    fee of $50.00 per year, the same fee paid by other non-residents.
+                                </li>
+                                <li>A staff member who wishes to borrow library materials must have a valid Tree County
+                                    Library Borrower’s card
+                                </li>
+                                <li>A staff member who lives outside the library’s service area, and does not have a
+                                    personal
+                                    Tree County Library card, may use the Unit card assigned to his or department to
+                                    borrow materials associated with a work assignment.
+                                </li>
+                                <li>Circulation services staff are responsible for checking out and checking in the
+                                    materials
+                                    borrowed by library staff members. Library staff are not to check out the materials
+                                    they wish to borrow or check in the materials they are returning.
+                                </li>
+                                <li>Staff members will observe the same loan periods and loan limits that are observed
+                                    by the general public.
+                                </li>
+                                <li>A staff member who wishes to borrow an item that is not currently available should
+                                    place a reserve on the item.
+                                </li>
+                                <li>A staff member who is aware of another staff member violating this policy must
+                                    inform his/her immediate supervisor.
+                                </li>
+                                <li>Unit supervisors are authorized to waive these regulations for a member of his or
+                                    staff if so doing is essential to the completion of a work related assignment.
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <record id="report_borrow_record" model="ir.actions.report">
+        <field name="name">Borrow Record</field>
+        <field name="model">onnet.borrow</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">Book_Shop.report_onnet_borrow</field>
+        <field name="report_file">Book_Shop.report_onnet_borrow</field>
+        <field name="binding_model_id" ref="Book_Shop.model_onnet_borrow"/>
+        <field name="binding_type">report</field>
+    </record>
+</odoo>

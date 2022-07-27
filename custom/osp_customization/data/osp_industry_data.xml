@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="osp_industry_others" model="osp.industry">
+            <field name="name">Others</field>
+        </record>
+    </data>
+</odoo>

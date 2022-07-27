@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <function model="ir.model.fields" name="formbuilder_whitelist">
+            <value>crm.lead</value>
+            <value eval="[
+                'contact_name',
+                'description',
+                'email_from',
+                'business_modal',
+                'name',
+                'partner_name',
+                'phone',
+                'team_id',
+                'user_id',
+                'industry',
+                'industry_ref',
+                'medium_ref',
+                'preferred_module',
+                'customer_requirement',
+                'solution_type',
+                'timeline',
+                'industry_id',
+                'annual_revenue',
+                'first_time_user',
+                'category',
+                'function',
+            ]"/>
+        </function>
+
+        <record id="osp_customization.contactus_banner_image" model="ir.attachment">
+            <field name="public" eval="True"/>
+            <field name="name">contactus_banner_image.png</field>
+            <field name="type">url</field>
+            <field name="url">/osp_customization/static/src/img/s_banner.png</field>
+        </record>
+    </data>
+</odoo>

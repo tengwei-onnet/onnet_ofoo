@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_osp_industry_user,access_osp_industry_user,model_osp_industry,base.group_user,1,0,0,0
+access_osp_industry_manager,access_osp_industry_manager,model_osp_industry,sales_team.group_sale_manager,1,1,1,1

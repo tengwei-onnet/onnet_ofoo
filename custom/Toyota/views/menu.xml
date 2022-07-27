@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <menuitem id="menu_toyota_root"
+              web_icon="Toyota,static/description/icon.png"
+              name="Toyota"
+              sequence="0"/>
+
+    <menuitem id="menu_car_master"
+              name="Car Details"
+              parent="menu_toyota_root"
+              sequence="0"/>
+
+
+</odoo>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="osp_frontend_layout" inherit_id="web.frontend_layout">
+        <xpath expr="//span[hasclass('o_footer_copyright_name')]" position="replace">
+            <span class="o_footer_copyright_name mr-2">Copyright &amp;copy; <script>document.write(new Date().getFullYear())</script></span>
+        </xpath>
+        <xpath expr="//div[hasclass('text-sm-right')]" position="replace">
+            <div class="col-sm text-center text-sm-right">
+                <a href="#">Privacy Policy</a>
+            </div>
+        </xpath>
+    </template>
+
+</odoo>

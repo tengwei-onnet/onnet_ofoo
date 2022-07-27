@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="osp_footer_custom" inherit_id="website.footer_custom" name="OSP Footer" active="True">
+        <xpath expr="//div[@id='footer']" position="replace">
+            <div id="footer" class="oe_structure oe_structure_solo" t-ignore="true" t-if="not no_footer">
+                <section class="s_text_block pt40 pb16" data-snippet="s_text_block" data-name="Text">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-3 pt24 pb24">
+                                <div class="col-12">
+                                    <h5 class="s_share_title mb-3"><b>Follow us</b></h5>
+                                    <a href="/website/social/facebook" class="s_share_facebook" target="_blank" style="text-decoration: none;">
+                                        <img src="/osp_customization/static/src/img/facebook.svg"/>
+                                    </a>
+                                    <a href="/website/social/twitter" class="s_share_twitter" target="_blank" style="text-decoration: none;">
+                                        <img src="/osp_customization/static/src/img/instagram.svg"/>
+                                    </a>
+                                    <a href="/website/social/linkedin" class="s_share_linkedin" target="_blank" style="text-decoration: none;">
+                                        <img src="/osp_customization/static/src/img/linkedin.svg"/>
+                                    </a>
+                                </div>
+                                <div class="col-12 mt16">
+                                    <h5 class="s_about_title mb-3"><b>About us</b></h5>
+                                    <ul class="list-unstyled">
+                                        <li class="mb-1"><a href="#">Our Company</a></li>
+                                        <li class="mb-1"><a href="#">Our Services</a></li>
+                                        <li class="mb-1"><a href="#">Success Stories</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 pt24 pb24">
+                                <div class="col-12">
+                                    <h5 class="s_solution_title mb-3"><b>Solutions</b></h5>
+                                    <ul class="list-unstyled">
+                                        <li class="mb-1"><a href="#">Manufacturing</a></li>
+                                        <li class="mb-1"><a href="#">Trading &amp; Distribution</a></li>
+                                    </ul>
+                                </div>
+                                <div class="col-12">
+                                    <h5 class="s_resource_title mb-3"><b>Resources</b></h5>
+                                    <ul class="list-unstyled">
+                                        <li class="mb-1"><a href="#">What is ERP</a></li>
+                                        <li class="mb-1"><a href="#">What is Odoo</a></li>
+                                        <li class="mb-1"><a href="#">Blog</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 pt24 pb24">
+                                <div class="col-12">
+                                    <h5 class="s_product_title mb-3"><b>Products</b></h5>
+                                    <ul class="list-unstyled">
+                                        <li class="mb-1"><a href="#">Sales</a></li>
+                                        <li class="mb-1"><a href="#">Purchase</a></li>
+                                        <li class="mb-1"><a href="#">MRP</a></li>
+                                        <li class="mb-1"><a href="#">Inventory</a></li>
+                                        <li class="mb-1"><a href="#">Invoicing</a></li>
+                                        <li class="mb-1"><a href="#">Accounting</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 pt24 pb24">
+                                <div class="col-12">
+                                    <h5 class="s_hq_title mb-3"><b>Headquarter</b></h5>
+                                    <p>
+                                        58-2, Persiaran Bayan Indah,<br/>
+                                        Bayan Bay, Bayan Lepas,<br/>
+                                        11900 - Penang, Malaysia.
+                                    </p>
+                                </div>
+                                <div class="col-12">
+                                    <h5 class="s_touch_title mb-3"><b>Get In Touch</b></h5>
+                                    <ul class="list-unstyled">
+                                        <li class="mb-1">
+                                            <i class="fa fa-phone fa-fw mr-2"/>
+                                            <span class="o_force_ltr">
+                                                <a href="tel:+604-6386 599">(PG) +604-6386 599</a>
+                                            </span>
+                                        </li>
+                                        <li class="mb-1">
+                                            <i class="fa fa-phone fa-fw mr-2"/>
+                                            <span class="o_force_ltr">
+                                                <a href="tel:+603-7880 0887">(KL) +603-7880 0887</a>
+                                            </span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </xpath>
+    </template>
+
+</odoo>
