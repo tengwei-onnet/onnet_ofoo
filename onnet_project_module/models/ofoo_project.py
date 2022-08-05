@@ -70,19 +70,16 @@ class Task(models.Model):
 
     def action_restore(self):
         self.pending_review = False
-        self.color = None
         self.kanban_state = 'normal'
 
     def action_validate(self):
         self.pending_review = False
-        self.color = None
         self.env['project.task'].search([('id', '=', self.id)]).write({'stage_id': 23})
         self.kanban_state = 'normal'
 
     def action_pending_review(self):
-        self.color = 3
         self.pending_review = True
-        self.kanban_state = 'done'
+        self.kanban_state = 'pending'
 
     # @api.depends('stage_id', 'kanban_state')
     # def _compute_kanban_state_label(self):
