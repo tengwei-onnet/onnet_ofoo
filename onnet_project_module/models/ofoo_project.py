@@ -11,41 +11,40 @@ class ProjectTaskType(models.Model):
         help='Override the default value displayed for the pending state for kanban selection, when the task or issue is in that stage.')
 
 
-class ProjectTeam(models.Model):
-    _name = "project.team"
-    _description = "Project Team"
-
-    name = fields.Char(string='Team', store=True)
-    task_id = fields.One2many(comodel_name='project.task', inverse_name='team_id', readonly=True)
-    count_task = fields.Integer(string='Tasks Count', compute='count_team_task')
-
-    @api.depends('task_id')
-    def count_team_task(self):
-        for rec in self:
-            rec.count_task = len(self.task_id)
-
-    _sql_constraints = [
-        ('unique_category_name', 'unique(name)', 'Name must be unique')
-    ]
-
-    def action_view_task(self):
-        return {
-            'name': 'Team Task',
-            'res_model': 'project.task',
-            'view_mode': 'list,form,kanban',
-            'context': {'default_team_id': self.id},
-            'domain': [('team_id', '=', self.id)],
-            'target': 'current',
-            'type': 'ir.actions.act_window',
-        }
+# class ProjectTeam(models.Model):
+#     _name = "project.team"
+#     _description = "Project Team"
+#
+#     name = fields.Char(string='Team', store=True)
+#     task_id = fields.One2many(comodel_name='project.task', inverse_name='team_id', readonly=True)
+#     count_task = fields.Integer(string='Tasks Count', compute='count_team_task')
+#
+#     @api.depends('task_id')
+#     def count_team_task(self):
+#         for rec in self:
+#             rec.count_task = len(self.task_id)
+#
+#     _sql_constraints = [
+#         ('unique_category_name', 'unique(name)', 'Name must be unique')
+#     ]
+#
+#     def action_view_task(self):
+#         return {
+#             'name': 'Team Task',
+#             'res_model': 'project.task',
+#             'view_mode': 'list,form,kanban',
+#             'context': {'default_team_id': self.id},
+#             'domain': [('team_id', '=', self.id)],
+#             'target': 'current',
+#             'type': 'ir.actions.act_window',
+#         }
 
 
 class Task(models.Model):
     _inherit = 'project.task'
 
-    team_id = fields.Many2one(comodel_name='project.team', string='Team', store=True, tracking=True, default=None)
+    team_id = fields.Many2one(comodel_name='helpdesk.team', string='Team', store=True, tracking=True, default=None, required=True)
     user_phone_no = fields.Char(string="Phone Number", related='user_ids.phone_no', readonly=True)
-    pending_review = fields.Boolean(string='Pending Review', default=False)
     team_name = fields.Char(string='Team Name', related='team_id.name', readonly=True, store=True)
     kanban_state = fields.Selection([
         ('normal', 'In Progress'),
@@ -67,19 +66,6 @@ class Task(models.Model):
                 task.kanban_state_label = task.legend_done
             else:
                 task.kanban_state_label = task.legend_pending
-
-    def action_restore(self):
-        self.pending_review = False
-        self.kanban_state = 'normal'
-
-    def action_validate(self):
-        self.pending_review = False
-        self.env['project.task'].search([('id', '=', self.id)]).write({'stage_id': 23})
-        self.kanban_state = 'normal'
-
-    def action_pending_review(self):
-        self.pending_review = True
-        self.kanban_state = 'pending'
 
     # @api.depends('stage_id', 'kanban_state')
     # def _compute_kanban_state_label(self):
@@ -137,7 +123,6 @@ class Task(models.Model):
             teams = vals.get('team_name')
             name = vals.get('name')
             standard_name = name.title()
-            print(f"....................{teams}")
             if teams:
                 if teams == 'OFOO':
                     ofoo_id = self.env['ir.sequence'].next_by_code(

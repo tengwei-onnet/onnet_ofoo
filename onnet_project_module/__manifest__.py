@@ -6,13 +6,13 @@
     'category': 'project',
     'author': 'Justin Wong',
     'description': """Onnet Project Customize""",
-    'depends': ['project', 'base'],
+    'depends': ['project', 'base', 'helpdesk'],
     'data': [
         'security/ir.model.access.csv',  # security file must at first
         'data/sequence_data.xml',
         'views/project_task_view.xml',
         'views/onnet_res_users_view.xml',
-        "views/project_team_view.xml",
+        # "views/project_team_view.xml",
     ],
     'demo': [],
     'application': True,
