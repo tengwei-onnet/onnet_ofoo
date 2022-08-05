@@ -12,39 +12,43 @@
         </field>
     </record>
 
-<!--    <record id="ofoo_task_type_edit" model="ir.ui.view">-->
-<!--        <field name="name">project.task.type.form</field>-->
-<!--        <field name="model">project.task.type</field>-->
-<!--        <field name="inherit_id" ref="project.task_type_edit"/>-->
-<!--        <field name="arch" type="xml">-->
-<!--            <xpath expr="//div[@class='row ml-1']" position="before">-->
-<!--                <div class="row ml-1" colspan="2">-->
-<!--                    <label for="legend_pending" string=" " class="o_status o_status_red mt4"-->
-<!--                           title="This step is pending. Click to block or set in pending."-->
-<!--                           aria-label="This step is pending. Click to block or set in pending." role="img"/>-->
-<!--                    <div class="col-11 pl-0">-->
-<!--                        <field name="legend_pending"/>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </xpath>-->
-<!--        </field>-->
-<!--    </record>-->
+    <record id="ofoo_task_type_edit" model="ir.ui.view">
+        <field name="name">project.task.type.form</field>
+        <field name="model">project.task.type</field>
+        <field name="inherit_id" ref="project.task_type_edit"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@class='row ml-1']" position="before">
+                <div class="row ml-1" colspan="2">
+                    <label for="legend_pending" string=" " class="o_status o_status_yellow mt4"
+                           title="This step is pending. Click to block or set in pending."
+                           aria-label="This step is pending. Click to block or set in pending." role="img"/>
+                    <div class="col-11 pl-0">
+                        <field name="legend_pending"/>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
 
-<!--    <record id="ofoo_view_task_kanban" model="ir.ui.view">-->
-<!--        <field name="name">ofoo.project.task.kanban</field>-->
-<!--        <field name="model">project.task</field>-->
-<!--        <field name="inherit_id" ref="project.view_task_kanban"/>-->
-<!--        <field name="arch" type="xml">-->
-<!--            <xpath expr="//kanban//field[@name='legend_blocked']" position="replace">-->
-<!--                <field name="legend_pending"/>-->
-<!--            </xpath>-->
+    <record id="ofoo_view_task_kanban" model="ir.ui.view">
+        <field name="name">ofoo.project.task.kanban</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_kanban"/>
+        <field name="arch" type="xml">
+            <xpath expr="//kanban//field[@name='legend_blocked']" position="after">
+                <field name="legend_pending"/>
+            </xpath>
 
-<!--            <xpath expr="//progressbar" position="replace">-->
-<!--                <progressbar field="kanban_state"-->
-<!--                             colors='{"done": "success", "pending": "warning", "blocked": "danger", "normal": "muted"}'/>-->
-<!--            </xpath>-->
-<!--        </field>-->
-<!--    </record>-->
+            <xpath expr="//progressbar" position="replace">
+                <progressbar field="kanban_state"
+                             colors='{"done": "success", "pending": "warning", "blocked": "danger", "normal": "muted"}'/>
+            </xpath>
+            <xpath expr="//field[@name='kanban_state']" position="replace">
+                <field name="kanban_state" widget="state_selection_widget_colour" groups="base.group_user"
+                       invisible="context.get('fsm_mode', False)"/>
+            </xpath>
+        </field>
+    </record>
 
     <record id="ofoo_view_task_form2" model="ir.ui.view">
         <field name="name">ofoo.project.task.form</field>
@@ -55,6 +59,21 @@
                 <button type="object" name="action_send_whatsapp" string="Send Whatsapp" class="oe_highlight"
                         icon="fa-whatsapp"/>
             </xpath>
+
+            <xpath expr="//field[@name='kanban_state']"
+                   position="replace">
+                <field name="kanban_state" widget="state_selection_widget_colour" class="ml-auto"/>
+            </xpath>
+
+<!--            <xpath expr="//field[@name='child_ids']//tree//field[@name='kanban_state']]"-->
+<!--                   position="replace">-->
+<!--                <field name="kanban_state" widget="state_selection_widget_colour" optional="hide"/>-->
+<!--            </xpath>-->
+
+<!--            <xpath expr="//field[@name='depend_on_ids']//tree//field[@name='kanban_state']]"-->
+<!--                   position="replace">-->
+<!--                <field name="kanban_state" widget="state_selection_widget_colour" optional="hide"/>-->
+<!--            </xpath>-->
 
             <xpath expr="//div[@name='button_box']" position="inside">
                 <button type="object" name="action_pending_review"
@@ -85,6 +104,7 @@
                 <field name="pending_review" readonly="1" invisible="1"/>
                 <field name="team_name" invisible="1" force_save="1"/>
             </xpath>
+
         </field>
     </record>
 </odoo>

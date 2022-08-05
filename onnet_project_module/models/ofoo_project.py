@@ -3,42 +3,70 @@ from odoo import api, fields, models, _
 from odoo.exceptions import ValidationError
 
 
-# class ProjectTeam(models.Model):
-#     _name = "project.team"
-#     _description = "Project Team"
-#
-#     name = fields.Char(string='Team', store=True)
-#     task_id = fields.One2many(comodel_name='project.task', inverse_name='team_id', readonly=True)
-#     count_task = fields.Integer(string='Tasks Count', compute='count_team_task')
-#
-#     @api.depends('task_id')
-#     def count_team_task(self):
-#         for rec in self:
-#             rec.count_task = len(self.task_id)
-#
-#     _sql_constraints = [
-#         ('unique_category_name', 'unique(name)', 'Name must be unique')
-#     ]
-#
-#     def action_view_task(self):
-#         return {
-#             'name': 'Team Task',
-#             'res_model': 'project.task',
-#             'view_mode': 'list,form,kanban',
-#             'context': {'default_team_id': self.id},
-#             'domain': [('team_id', '=', self.id)],
-#             'target': 'current',
-#             'type': 'ir.actions.act_window',
-#         }
-#
+class ProjectTaskType(models.Model):
+    _inherit = 'project.task.type'
+
+    legend_pending = fields.Char(
+        'Yellow Kanban Label', default=lambda s: _('Pending Review'), translate=True, required=True,
+        help='Override the default value displayed for the pending state for kanban selection, when the task or issue is in that stage.')
+
+
+class ProjectTeam(models.Model):
+    _name = "project.team"
+    _description = "Project Team"
+
+    name = fields.Char(string='Team', store=True)
+    task_id = fields.One2many(comodel_name='project.task', inverse_name='team_id', readonly=True)
+    count_task = fields.Integer(string='Tasks Count', compute='count_team_task')
+
+    @api.depends('task_id')
+    def count_team_task(self):
+        for rec in self:
+            rec.count_task = len(self.task_id)
+
+    _sql_constraints = [
+        ('unique_category_name', 'unique(name)', 'Name must be unique')
+    ]
+
+    def action_view_task(self):
+        return {
+            'name': 'Team Task',
+            'res_model': 'project.task',
+            'view_mode': 'list,form,kanban',
+            'context': {'default_team_id': self.id},
+            'domain': [('team_id', '=', self.id)],
+            'target': 'current',
+            'type': 'ir.actions.act_window',
+        }
+
 
 class Task(models.Model):
-    _inherit = ["project.task", "helpdesk.team"]
+    _inherit = 'project.task'
 
-    team_id = fields.Many2one(comodel_name='helpdesk.team', string='Team', store=True, tracking=True, default=None)
+    team_id = fields.Many2one(comodel_name='project.team', string='Team', store=True, tracking=True, default=None)
     user_phone_no = fields.Char(string="Phone Number", related='user_ids.phone_no', readonly=True)
     pending_review = fields.Boolean(string='Pending Review', default=False)
     team_name = fields.Char(string='Team Name', related='team_id.name', readonly=True, store=True)
+    kanban_state = fields.Selection([
+        ('normal', 'In Progress'),
+        ('done', 'Ready'),
+        ('blocked', 'Blocked'),
+        ('pending', 'Pending Review')], string='Kanban State',
+        copy=False, default='normal', required=True)
+    legend_pending = fields.Char(related='stage_id.legend_pending', string='Kanban Pending Review Explanation',
+                                 readonly=True, related_sudo=False)
+
+    @api.depends('stage_id', 'kanban_state')
+    def _compute_kanban_state_label(self):
+        for task in self:
+            if task.kanban_state == 'normal':
+                task.kanban_state_label = task.legend_normal
+            elif task.kanban_state == 'blocked':
+                task.kanban_state_label = task.legend_blocked
+            elif task.kanban_state == 'done':
+                task.kanban_state_label = task.legend_done
+            else:
+                task.kanban_state_label = task.legend_pending
 
     def action_restore(self):
         self.pending_review = False
