@@ -12,6 +12,7 @@
         'data/sequence_data.xml',
         'views/project_task_view.xml',
         'views/onnet_res_users_view.xml',
+        'views/helpdesk_team_view.xml',
         # "views/project_team_view.xml",
     ],
     'demo': [],

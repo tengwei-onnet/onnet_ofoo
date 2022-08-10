@@ -54,6 +54,7 @@ class Task(models.Model):
         copy=False, default='normal', required=True)
     legend_pending = fields.Char(related='stage_id.legend_pending', string='Kanban Pending Review Explanation',
                                  readonly=True, related_sudo=False)
+    sequence_id = fields.Char(string='Sequence Code', related='team_id.sequence_id', readonly=True)
 
     @api.depends('stage_id', 'kanban_state')
     def _compute_kanban_state_label(self):
@@ -66,22 +67,6 @@ class Task(models.Model):
                 task.kanban_state_label = task.legend_done
             else:
                 task.kanban_state_label = task.legend_pending
-
-    # @api.depends('stage_id', 'kanban_state')
-    # def _compute_kanban_state_label(self):
-    #     for task in self:
-    #         if task.kanban_state == 'normal':
-    #             task.color = None
-    #             task.pending_review = False
-    #             task.kanban_state_label = task.legend_normal
-    #         elif task.kanban_state == 'blocked':
-    #             task.color = None
-    #             task.pending_review = False
-    #             task.kanban_state_label = task.legend_blocked
-    #         elif task.kanban_state == 'done':
-    #             task.color = None
-    #             task.pending_review = False
-    #             task.kanban_state_label = task.legend_done
 
     def action_send_whatsapp(self):
         # Store user_ids name in array list
@@ -120,71 +105,98 @@ class Task(models.Model):
     @api.model_create_multi
     def create(self, vals_list):
         for vals in vals_list:
-            teams = vals.get('team_name')
+            sequence = vals.get('sequence_id')
             name = vals.get('name')
             standard_name = name.title()
-            if teams:
-                if teams == 'OFOO':
-                    ofoo_id = self.env['ir.sequence'].next_by_code(
-                        'onnet.ofoo')
-                    if name is None:
-                        vals['name'] = ofoo_id
-                    vals['name'] = ofoo_id + ' ' + standard_name
 
-                elif teams == 'OSIM':
-                    osim_id = self.env['ir.sequence'].next_by_code(
-                        'onnet.osim')
-                    if name is None:
-                        vals['name'] = osim_id
-                    vals['name'] = osim_id + ' ' + standard_name
+            if sequence:
+                task_id = self.env['ir.sequence'].next_by_code(sequence)
+                vals['name'] = task_id + ' ' + standard_name
+            elif not self.env['ir.sequence'].next_by_code(sequence):
+                vals['name'] = standard_name
 
-                elif teams == 'Customer Service':
-                    cs_id = self.env['ir.sequence'].next_by_code(
-                        'onnet.cs')
-                    if name is None:
-                        vals['name'] = cs_id
-                    vals['name'] = cs_id + ' ' + standard_name
+        res = super(Task, self).create(vals_list)
+        return res
 
-                elif teams == 'Cloud Specialist':
-                    cld_id = self.env['ir.sequence'].next_by_code(
-                        'onnet.cloud')
-                    if name is None:
-                        vals['name'] = cld_id
-                    vals['name'] = cld_id + ' ' + standard_name
-                else:
-                    vals['name'] = 'undefined_team' + ' ' + standard_name
+            # teams = vals.get('team_name')
+            # name = vals.get('name')
+            # standard_name = name.title()
+            # if teams:
+            #     if teams == 'OFOO':
+            #         ofoo_id = self.env['ir.sequence'].next_by_code(
+            #             'onnet.ofoo')
+            #         if name is None:
+            #             vals['name'] = ofoo_id
+            #         vals['name'] = ofoo_id + ' ' + standard_name
+            #
+            #     elif teams == 'OSIM':
+            #         osim_id = self.env['ir.sequence'].next_by_code(
+            #             'onnet.osim')
+            #         if name is None:
+            #             vals['name'] = osim_id
+            #         vals['name'] = osim_id + ' ' + standard_name
+            #
+            #     elif teams == 'Customer Service':
+            #         cs_id = self.env['ir.sequence'].next_by_code(
+            #             'onnet.cs')
+            #         if name is None:
+            #             vals['name'] = cs_id
+            #         vals['name'] = cs_id + ' ' + standard_name
+            #
+            #     elif teams == 'Cloud Specialist':
+            #         cld_id = self.env['ir.sequence'].next_by_code(
+            #             'onnet.cloud')
+            #         if name is None:
+            #             vals['name'] = cld_id
+            #         vals['name'] = cld_id + ' ' + standard_name
+            #     else:
+            #         vals['name'] = 'undefined_team' + ' ' + standard_name
 
         res = super(Task, self).create(vals_list)
         return res
 
     def write(self, vals):
-        if 'team_name' in vals:
-            new_team = vals['team_name']
-            old_team = self.team_name
-            if new_team != old_team:
-                name = self.name
-                split_name = str(name).split(" ", 1)
-                if new_team == 'OFOO':
-                    ofoo_id = self.env['ir.sequence'].next_by_code(
-                        'onnet.ofoo')
-                    vals['name'] = ofoo_id + ' ' + split_name[1]
-
-                elif new_team == 'OSIM':
-                    osim_id = self.env['ir.sequence'].next_by_code(
-                        'onnet.osim')
-                    vals['name'] = osim_id + ' ' + split_name[1]
-
-                elif new_team == 'Customer Service':
-                    cs_id = self.env['ir.sequence'].next_by_code(
-                        'onnet.cs')
-                    vals['name'] = cs_id + ' ' + split_name[1]
-
-                elif new_team == 'Cloud Specialist':
-                    cld_id = self.env['ir.sequence'].next_by_code(
-                        'onnet.cloud')
-                    vals['name'] = cld_id + ' ' + split_name[1]
+        if 'sequence_id' in vals:
+            new_sequence_id = vals['sequence_id']
+            old_sequence_id = self.sequence_id
+            name = self.name
+            if new_sequence_id != old_sequence_id:
+                if old_sequence_id is False:
+                    task_id = self.env['ir.sequence'].next_by_code(new_sequence_id)
+                    vals['name'] = task_id + ' ' + name
                 else:
-                    vals['name'] = 'undefined_team' + ' ' + split_name[1]
+                    split_name = str(name).split(" ", 1)
+                    task_id = self.env['ir.sequence'].next_by_code(new_sequence_id)
+                    vals['name'] = task_id + ' ' + split_name[1]
+
+
+        # if 'team_name' in vals:
+        #     new_team = vals['team_name']
+        #     old_team = self.team_name
+        #     if new_team != old_team:
+        #         name = self.name
+        #         split_name = str(name).split(" ", 1)
+        #         if new_team == 'OFOO':
+        #             ofoo_id = self.env['ir.sequence'].next_by_code(
+        #                 'onnet.ofoo')
+        #             vals['name'] = ofoo_id + ' ' + split_name[1]
+        #
+        #         elif new_team == 'OSIM':
+        #             osim_id = self.env['ir.sequence'].next_by_code(
+        #                 'onnet.osim')
+        #             vals['name'] = osim_id + ' ' + split_name[1]
+        #
+        #         elif new_team == 'Customer Service':
+        #             cs_id = self.env['ir.sequence'].next_by_code(
+        #                 'onnet.cs')
+        #             vals['name'] = cs_id + ' ' + split_name[1]
+        #
+        #         elif new_team == 'Cloud Specialist':
+        #             cld_id = self.env['ir.sequence'].next_by_code(
+        #                 'onnet.cloud')
+        #             vals['name'] = cld_id + ' ' + split_name[1]
+        #         else:
+        #             vals['name'] = 'undefined_team' + ' ' + split_name[1]
 
         res = super(Task, self).write(vals)
         return res
